@@ -143,7 +143,7 @@ impl<'a> App<'a> {
         search_string.trim().to_string()
     }
 
-    pub fn get_command_strign(&mut self) -> String {
+    pub fn get_command_string(&mut self) -> String {
         let mut command_string = String::new();
         for c in &self.command_buffer {
             command_string.push(*c);
@@ -415,7 +415,7 @@ impl<'a> App<'a> {
     }
 
     pub fn execute_command(&mut self) {
-        let command_string = self.get_command_strign();
+        let command_string = self.get_command_string();
         self.command_buffer = Vec::new();
         process_command(self, command_string);
         self.set_mode(Mode::Browse);
