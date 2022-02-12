@@ -80,6 +80,7 @@ pub fn get_files_for_current_directory_astrict(
     app: &mut App,
     astrict: &str,
 ) -> Result<Vec<DirectoryItem>, io::Error> {
+    let astrict_low = astrict.to_ascii_lowercase();
     //Get list, unwrap, and convert results to &Path
     let dir_items: Vec<PathBuf> = match read_dir(&app.current_directory) {
         Ok(val) => val.map(|f| f.unwrap().path()).collect(),
@@ -90,7 +91,10 @@ pub fn get_files_for_current_directory_astrict(
     let mut files: Vec<DirectoryItem> = Vec::new();
     for item in dir_items {
         let path_string = String::from(item.to_string_lossy());
-        if !split_path_to_name(&path_string).contains(astrict) {
+        if !split_path_to_name(&path_string)
+            .to_ascii_lowercase()
+            .contains(&astrict_low)
+        {
             continue;
         };
         if item.is_file() {
@@ -136,7 +140,7 @@ pub fn read_audio_file<'a>(path: &str, extension: &str) -> Result<Audio, String>
                 if let Some(d) = source.total_duration() {
                     duration = d;
                 };
-            },
+            }
             Err(err) => return Err(err.to_string()),
         };
     };
