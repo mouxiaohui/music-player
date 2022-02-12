@@ -20,7 +20,7 @@ pub fn handle_theme(init_theme: InitTheme) -> Theme {
 
 pub fn draw(app: &mut App, theme: &Theme) -> Result<(), ExitFailure> {
     let search_string = app.get_search_string();
-    let command_string = app.get_command_strign();
+    let command_string = app.get_command_string();
     app.terminal.draw(|f| {
         let chunks = Layout::default()
             .direction(Direction::Horizontal)
