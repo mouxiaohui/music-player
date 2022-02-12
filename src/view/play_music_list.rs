@@ -182,12 +182,12 @@ fn draw_play_list<B: Backend>(
             ),
         ]));
         artists.push(Spans::from(vec![Span::styled(
-            &playing_music.artist,
+            format!(" {}", &playing_music.artist),
             Style::default().fg(theme.play_music_list_artist_color),
         )]));
 
         albums.push(Spans::from(vec![Span::styled(
-            &playing_music.album,
+            format!(" {}", &playing_music.album),
             Style::default().fg(theme.play_music_list_album_color),
         )]));
     }
@@ -211,12 +211,12 @@ fn draw_play_list<B: Backend>(
         ]));
 
         artists.push(Spans::from(vec![Span::styled(
-            &music.artist,
+            format!(" {}", &music.artist),
             Style::default().fg(theme.play_music_list_artist_color),
         )]));
 
         albums.push(Spans::from(vec![Span::styled(
-            &music.album,
+            format!(" {}", &music.album),
             Style::default().fg(theme.play_music_list_album_color),
         )]));
     }
@@ -231,14 +231,14 @@ fn draw_play_list<B: Backend>(
     artists.insert(
         0,
         Spans::from(vec![Span::styled(
-            "Artist",
+            " Artist",
             Style::default().fg(theme.play_music_list_header_color),
         )]),
     );
     albums.insert(
         0,
         Spans::from(vec![Span::styled(
-            "Album",
+            " Album",
             Style::default().fg(theme.play_music_list_header_color),
         )]),
     );

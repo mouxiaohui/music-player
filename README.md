@@ -84,3 +84,5 @@ theme:
 | Remove all songs from the playlist                                        | clear \| cls      |
 | Play the whole playlist (Repeat: on)                                      | order \| od       |
 | Put the current song on repeat (Repeat: off)                              | singlecycle \| sc |
+| Shuffle current playlist | shuffle \| sh |
+| Play the next song in the playlist                                        | next \| n         |

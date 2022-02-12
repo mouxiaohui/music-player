@@ -1,4 +1,4 @@
-use std::time::Duration;
+use std::time::{Instant, Duration};
 
 use crate::file_ops::read_audio_file;
 use crate::utils::split_path::split_path_to_name;
@@ -12,6 +12,7 @@ pub struct Music {
     pub album: String,
     pub play_position: Duration,
     pub total_duration: Duration,
+    pub start_time: Option<Instant>,
 }
 
 impl Music {
@@ -29,6 +30,7 @@ impl Music {
                 album: audio.album,
                 play_position: Duration::from_secs(0),
                 total_duration: audio.duration,
+                start_time: None,
             }),
             Err(err) => Err(err),
         }
