@@ -328,7 +328,9 @@ impl<'a> App<'a> {
 
     pub fn play_next_music(&mut self) {
         if !self.player.empty() {
+            let volume = self.player.volume();
             self.new_sink().unwrap();
+            self.player.set_volume(volume);
         }
         if self.play_music_list.len() > 0 {
             match get_audio_source(&self.play_music_list[0].path) {
