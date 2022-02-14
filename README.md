@@ -10,7 +10,7 @@ Configuration file path: ~\\.config\music_player\config.yml
 
 ```yml
 # Path to store music
-# 存放音乐的路径
+# 存放音乐的路径 (默认系统音乐路径)
 music_database: ''
 
 # Color

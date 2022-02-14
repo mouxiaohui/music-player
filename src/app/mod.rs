@@ -40,7 +40,6 @@ pub struct App<'a> {
     pub mode: Mode,
     pub play_style: PlayStyle,
 
-    music_volume: f32,
     max_file_selection: usize,
 }
 
@@ -70,7 +69,6 @@ impl<'a> App<'a> {
             player,
             mode: Mode::Browse,
             play_style: PlayStyle::PlayOrder,
-            music_volume: 1.0,
             max_file_selection: 0,
         };
 
@@ -81,7 +79,6 @@ impl<'a> App<'a> {
 
     fn new_sink(&mut self) -> Result<(), ExitFailure> {
         self.player = Sink::try_new(&self.stream_handle)?;
-        self.player.set_volume(self.music_volume);
         Ok(())
     }
 
@@ -356,7 +353,6 @@ impl<'a> App<'a> {
     pub fn update_volume(&mut self, f: &dyn Fn(f32) -> f32) {
         let volume = f(self.player.volume());
         self.player.set_volume(volume);
-        self.music_volume = volume
     }
 
     pub fn check_music_list(&mut self) {
