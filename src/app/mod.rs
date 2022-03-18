@@ -1,10 +1,11 @@
 use std::io::{self, Stdout};
+use std::ops::DerefMut;
 use std::path::{self, PathBuf};
 use std::time::{Duration, Instant};
 
 use exitfailure::ExitFailure;
 use rand::prelude::SliceRandom;
-use rodio::{OutputStreamHandle, Sink};
+use rodio::{OutputStreamHandle, Sink, Source};
 use tui::backend::CrosstermBackend;
 use tui::Terminal;
 
@@ -324,6 +325,38 @@ impl<'a> App<'a> {
         } else {
             self.player.pause();
         }
+    }
+
+    pub fn skip_duration(&mut self, tick_duration: i64) {
+        let is_add = tick_duration.is_positive();
+        let mut td = tick_duration.abs() as u64;
+
+        let (path, dur) = if let Some(playing_music) = &mut self.playing_music {
+            let start_time = playing_music.start_time.unwrap_or(Instant::now());
+
+            if is_add {
+                playing_music.play_position = start_time.elapsed() + Duration::from_secs(td);
+                playing_music.start_time = Some(start_time - Duration::from_secs(td));
+            } else {
+                if td > playing_music.play_position.as_secs() {
+                    td = playing_music.play_position.as_secs();
+                }
+                playing_music.play_position = start_time.elapsed() - Duration::from_secs(td);
+                playing_music.start_time = Some(start_time + Duration::from_secs(td));
+            }
+
+            (&playing_music.path, playing_music.play_position)
+        } else {
+            return;
+        };
+
+        match get_audio_source(path) {
+            Ok(source) => {
+                self.new_sink().unwrap();
+                self.player.append(source.skip_duration(dur));
+            }
+            Err(err) => self.error = Some(err.to_string()),
+        };
     }
 
     pub fn play_next_music(&mut self) {

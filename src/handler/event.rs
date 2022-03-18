@@ -32,6 +32,8 @@ pub fn handle_event(app: &mut App, music_database: &str) -> Result<bool, ExitFai
                 KeyCode::Char('-') => app.update_volume(&|v| if v > 0.0 {v - 0.05} else {0.0}),
                 KeyCode::Char('=') => app.update_volume(&|v| if v < 1.25 {v + 0.05} else {1.25}),
                 KeyCode::Char('+') => app.update_volume(&|v| if v < 1.25 {v + 0.05} else {1.25}),
+                KeyCode::Right => app.skip_duration(10),
+                KeyCode::Left => app.skip_duration(-10),
                 KeyCode::Char('|') => app.set_mode(Mode::Search),
                 KeyCode::Char(':') => app.set_mode(Mode::Command),
                 KeyCode::Esc => {
