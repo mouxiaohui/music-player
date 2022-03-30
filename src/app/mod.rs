@@ -1,5 +1,4 @@
 use std::io::{self, Stdout};
-use std::ops::DerefMut;
 use std::path::{self, PathBuf};
 use std::time::{Duration, Instant};
 
